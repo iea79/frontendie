@@ -1,0 +1,32 @@
+// Social link
+
+.soc {
+	// float: left;
+	display: flex;
+	align-items: center;
+	color: inherit;
+
+	&__label {
+		display: none;
+		@media (min-width: 768px) {
+			display: block;
+		}
+	}
+
+	&__list {
+		display: flex;
+		align-items: center;
+	}
+
+	a {
+		display: inline-block;
+		color: inherit;
+		text-decoration: none;
+		font-size: 1.5em;
+		margin-left: 1em;
+
+		&:hover {
+			color: #2B8CFF;
+		}
+	}
+}

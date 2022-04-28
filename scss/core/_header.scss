@@ -1,0 +1,61 @@
+/* Header
+ ----------------------------------------------------------------------------- */
+.header {
+	padding: 2em 0;
+	position: absolute;
+	z-index: 10;
+	width: 100%;
+	will-change: transform;
+	color: $color_withe;
+	// transition: transform 0.1s;
+
+	@media (min-width: 768px) {
+		padding: 3.8em 0;
+	}
+
+	&__content {
+		@extend .container_center;
+		margin: auto;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		@media (min-width: 768px) {}
+	}
+
+	&__nav {
+		@media (min-width: 768px) {
+			flex-grow: 1;
+			margin-left: 9.375em;
+		}
+		@media (max-width: 767px) {
+			position: fixed;
+		}
+	}
+
+	&.stiky {
+		color: $main_color;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		text-shadow: 0 0 1em rgba($color_withe, 0.3);
+		padding: 1.3em 0;
+
+		@media (max-width: 767px) {
+			background: $color_withe;
+		}
+
+		&_dark {
+			color: $color_withe;
+
+			@media (max-width: 767px) {
+				background: $main_color;
+			}
+		}
+
+		@media (min-width: 768px) {
+			padding: 1em 0;
+		}
+	}
+}

@@ -1,0 +1,144 @@
+// Style for button and pseudo button for input and link
+
+.btn {
+	color: $btn_default_text_color;
+	font-family: $second_font_family;
+	font-size: 1.25em;
+	font-weight: 400;
+	padding: 1em 3em;
+	border: none;
+	outline: none;
+	text-decoration: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background-color: $btn_default_bg_color;
+	text-transform: uppercase;
+	text-align: center;
+	max-width: 100%;
+	cursor: pointer;
+	border-radius: 0;
+	transition: all 0.3s;
+	text-decoration: none;
+	letter-spacing: 0.15em;
+	position: relative;
+	z-index: 2;
+	overflow: hidden;
+
+	&:before {
+		content: '';
+		display: block;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: auto;
+		width: 0;
+		background: $color_withe;
+		// opacity: 0;
+		// transform: skewX(45deg);
+		transition: width 0.4s, transform 0.4s, opacity 0.2s;
+		z-index: -1;
+		margin-left: auto;
+		border: 1px solid $btn_default_bg_color;
+	}
+
+	&:hover {
+		// background-color: darken($btn_default_bg_color, 7%);
+		// color: $color_withe;
+		text-decoration: none;
+		color: $btn_default_bg_color;
+
+		&:before {
+			// opacity: 1;
+			width: 100%;
+			right: auto;
+			left: 0;
+			// transform: skewX(0);
+		}
+	}
+
+	&:active,
+	&:focus {
+		// background-color: lighten($btn_default_bg_color, 7%);
+		color: $color_withe;
+	}
+	@each $status_el, $color_bg in $el_colors {
+		&_#{$status_el} {
+			background-color: $color_bg;
+			border-color: $color_bg;
+			color: $btn_contrast_text_color;
+
+			&:hover {
+				background-color: darken($color_bg, 7%);
+				color: $btn_contrast_text_color;
+			}
+
+			&:active,
+			&:focus {
+				background-color: darken($color_bg, 10%);
+				color: $btn_contrast_text_color;
+			}
+		}
+	}
+
+	&_round {
+		border-radius: 50%;
+
+		.btn__overlay {
+			border-radius: 50%;
+		}
+	}
+
+	&_border {
+		border: 1px solid $btn_default_bg_color;
+		background-color: transparent;
+		color: $btn_default_bg_color;
+		font-weight: 400;
+		font-family: $main_font_family;
+		font-size: 1.5em;
+		letter-spacing: 0.05em;
+
+		.btn__overlay {
+			background-color: $btn_default_bg_color;
+		}
+
+		&:hover {
+			color: $color_withe;
+		}
+	}
+
+	&__overlay {
+		display: block;
+		position: absolute;
+		background-color: rgba(lighten($btn_default_bg_color, 14%), 0.7);
+		animation: btnNover 0.5s forwards linear;
+		z-index: -1;
+		width: 0;
+		padding-bottom: 0;
+		border-radius: 0;
+		transform: translate3d(-50%, -50%, 0) scale(0);
+	}
+
+}
+
+@keyframes btnNover {
+	from {
+		width: 0;
+		padding-bottom: 0;
+		opacity: 0;
+		transform: translate3d(-50%, -50%, 0) scale(0);
+	}
+
+	50% {
+		opacity: 1;
+		transform: translate3d(-50%, -50%, 0) scale(1.1);
+	}
+
+	to {
+		width: 100%;
+		padding-bottom: 100%;
+		opacity: 1;
+		transform: translate3d(-50%, -50%, 0) scale(2.2);
+	}
+}

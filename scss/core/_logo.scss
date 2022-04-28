@@ -1,0 +1,44 @@
+.logo {
+    font-weight: 500;
+    font-size: 1.125em;
+    color: inherit;
+    text-decoration: none;
+
+    &:before {
+        content: '|';
+        animation: blink 1.5s linear infinite;
+        vertical-align: text-top;
+    }
+
+    &:hover {
+        &:before {
+            animation: none;
+        }
+    }
+}
+
+@keyframes blink {
+    0% {
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

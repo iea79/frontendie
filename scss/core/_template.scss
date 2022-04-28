@@ -1,0 +1,157 @@
+// Main wrappers =====================================
+
+html.no-touch {
+	margin-top: 0 !important;
+}
+
+body,
+html {
+	// overflow: hidden;
+}
+
+b,
+strong {
+	font-weight: 500;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	font-size: calc(.034 * 100vw + 0px);
+	height: auto;
+	min-height: 100%;
+	background: #fff;
+	// background: #E6E5E2;
+	// color: $color_withe;
+
+	// background-color: #101010;
+
+	@media (min-width: 768px) {
+		// font-size: calc(.012 * 100vw + 0px);
+		font-size: calc(.00838 * 100vw + 0px);
+	}
+
+	@media (min-width: 1400px) {
+		// font-size: calc(.00838 * 100vw + 0px);
+	}
+
+	@media (min-width: 1600px) {}
+
+	scrollbar-width: none;
+	scrollbar-color: #E6E5E2 #1D1D1B;
+
+	&::-webkit-scrollbar {
+		width: 0;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: #1D1D1B;
+		/* color of the tracking area */
+	}
+
+	&::-webkit-scrollbar-thumb {
+		cursor: pointer;
+		background-color: #E6E5E2;
+		border-radius: 0.625em;
+		// border: 3px solid orange;
+	}
+
+	.scrollbar-track {
+		display: none !important;
+	}
+
+	&[data-scrollbar] {
+		position: fixed;
+		height: 100vh;
+		width: 100%;
+	}
+
+}
+
+.scroll-content {
+	will-change: transform;
+	// position: absolute;
+	// top: 0;
+	// left: 0;
+	// width: 100%;
+
+	// &[data-scrollbar] {
+	// 	width: auto;
+	// 	height: 100vh;
+	// 	overflow: auto;
+	// }
+}
+
+// .viewport {
+// 	position: fixed;
+// 	top: 0;
+// 	left: 0;
+// 	width: 100%;
+// 	height: 100%;
+// 	overflow: hidden;
+//
+// 	&[data-scrollbar] {
+// 		position: fixed;
+// 	}
+// }
+
+.wrapper {
+	font-size: $main_font_size;
+	display: flex;
+	flex-direction: column;
+	// overflow: hidden;
+	// position: fixed;
+	// top: 0;
+	// left: 0;
+	// width: 100%;
+	// height: 100%;
+	// margin: 0 auto (-$footer_height); // отрицательный нижний отступ на высоту футера
+
+	&[data-scrollbar] {
+		position: fixed;
+	}
+
+	.scroll-content {
+		will-change: transform;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+	}
+}
+
+/* Middle
+ ----------------------------------------------------------------------------- */
+.main {
+	flex-grow: 1;
+	overflow: hidden;
+	// box-shadow: 0 2em 2em rgba(#000, 1);
+	// box-shadow: 0 2em 2em rgba(#1D1D1B, 1);
+
+	// padding-bottom: $footer_height;
+	// @extend %clear_a;
+}
+
+.container_center {
+	max-width: $container_width;
+	width: 100%;
+	padding: 0 2em;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.hidden {
+	display: none;
+}
+
+.desktop {
+	@media (max-width: 767px) {
+		display: none !important;
+	}
+}
+
+.mobile {
+	@media (min-width: 768px) {
+		display: none !important;
+	}
+}
