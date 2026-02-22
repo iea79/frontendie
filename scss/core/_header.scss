@@ -1,61 +1,57 @@
 /* Header
  ----------------------------------------------------------------------------- */
 .header {
-	padding: 2em 0;
-	position: absolute;
+	padding: 1.9em 0 1.2em;
 	z-index: 10;
-	width: 100%;
-	will-change: transform;
-	color: $color_withe;
-	// transition: transform 0.1s;
+	position: relative;
+	// background-color: #ddd;
+	.home & {
+		position: absolute;
+		width: 100%;
+	}
 
-	@media (min-width: 768px) {
-		padding: 3.8em 0;
+	&__border {
+		border-bottom: 1px solid rgba($color_withe, 0.1);
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
 	}
 
 	&__content {
 		@extend .container_center;
 		margin: auto;
 		display: flex;
-		align-items: center;
 		justify-content: space-between;
-
-		@media (min-width: 768px) {}
+		align-items: center;
 	}
 
-	&__nav {
-		@media (min-width: 768px) {
-			flex-grow: 1;
-			margin-left: 9.375em;
-		}
-		@media (max-width: 767px) {
-			position: fixed;
-		}
+	&__left,
+	&__right {
+		padding-bottom: 0.3em;
+		flex-grow: 1;
+		max-width: 25.75em;
 	}
 
-	&.stiky {
-		color: $main_color;
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		text-shadow: 0 0 1em rgba($color_withe, 0.3);
-		padding: 1.3em 0;
-
-		@media (max-width: 767px) {
-			background: $color_withe;
-		}
-
-		&_dark {
-			color: $color_withe;
-
-			@media (max-width: 767px) {
-				background: $main_color;
-			}
-		}
-
-		@media (min-width: 768px) {
-			padding: 1em 0;
-		}
+	&__left {
+		// max-width: 25.25em;
 	}
+
+	&__right {
+		// max-width: 25.25em;
+	}
+
+	&__center {
+		padding-top: 0.6em;
+		padding-bottom: 0.3em;
+	}
+
+}
+
+// stiky menu
+.stiky {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
 }

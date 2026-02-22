@@ -1,32 +1,22 @@
 // Social link
-
 .soc {
-	// float: left;
-	display: flex;
-	align-items: center;
-	color: inherit;
-
-	&__label {
-		display: none;
-		@media (min-width: 768px) {
-			display: block;
-		}
-	}
-
-	&__list {
-		display: flex;
-		align-items: center;
-	}
-
+	float: left;
 	a {
 		display: inline-block;
-		color: inherit;
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		background-color: #000;
+		text-align: center;
 		text-decoration: none;
-		font-size: 1.5em;
-		margin-left: 1em;
-
+		@include trs(0.3s);
 		&:hover {
-			color: #2B8CFF;
+			opacity: .8;
+		}
+		&:before {
+			content: 'soc';
+			color: #fff;
+			text-decoration: none;
 		}
 	}
 }

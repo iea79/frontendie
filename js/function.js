@@ -58,8 +58,6 @@ window.addEventListener('resize', () => {
     if (app.resized == screen.width) { return; }
     app.resized = screen.width;
 
-    console.log('resize');
-
     checkOnResize();
 });
 
@@ -237,12 +235,12 @@ function animateHomeScreen() {
         .from('.header', {
             y: '-100%',
             opacity: 0,
-            duration: 0.8
+            duration: 0.6
         })
         .from('.homeScreen__title h1', {
             y: '100%',
             // opacity: 0,
-            duration: 0.8
+            duration: 0.6
         })
         .from('.homeScreen__name span', {
             y: '100%',

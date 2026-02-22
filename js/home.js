@@ -308,28 +308,28 @@ function reset() {
 	createStreams();
 }
 
-const homeBg = document.getElementById('homeBg');
-const p5wrap = new p5.Element(homeBg);
-
-function setup() {
-	let cnv = createCanvas(innerWidth, innerHeight);
-    cnv.parent(p5wrap);
-	reset();
-	frameRate(20);
-	// colorMode(HSB);
-	noStroke();
-	textSize(charSize);
-	textFont("monospace");
-	background(0);
-}
-
-function draw() {
-	background(0, 0.4);
-	streams.forEach((s) => s.draw());
-}
-
-function windowResized() {
-	resizeCanvas(innerWidth, innerHeight);
-	background(0);
-	reset();
-}
+// const homeBg = document.getElementById('homeBg');
+// const p5wrap = new p5.Element(homeBg);
+//
+// function setup() {
+// 	let cnv = createCanvas(innerWidth, innerHeight);
+//     cnv.parent(p5wrap);
+// 	reset();
+// 	frameRate(20);
+// 	// colorMode(HSB);
+// 	noStroke();
+// 	textSize(charSize);
+// 	textFont("monospace");
+// 	background(0);
+// }
+//
+// function draw() {
+// 	background(0, 0.4);
+// 	streams.forEach((s) => s.draw());
+// }
+//
+// function windowResized() {
+// 	resizeCanvas(innerWidth, innerHeight);
+// 	background(0);
+// 	reset();
+// }

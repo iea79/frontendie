@@ -16,6 +16,8 @@
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
+	<meta name="keywords"
+		content="профессиональная верстка сайта, сайт на wordpress, шаблоны wordpress, reactjs, nextjs, wordpress" />
 
 	<?php wp_head(); ?>
 </head>
@@ -48,8 +50,8 @@
 				<div class="soc">
 					<div class="soc__label">Связаться со мной:</div>
 					<div class="soc__list">
-						<a href="#" class="icon_vk"></a>
-						<a href="#" class="icon_tg"></a>
+						<a href="https://vk.com/busforward" target="_blank" class="icon_vk"></a>
+						<a href="https://t.me/busforward" target="_blank" class="icon_tg"></a>
 					</div>
 				</div>
 			</div>
