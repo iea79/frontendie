@@ -56,7 +56,7 @@
 </section>
 <!-- end skills -->
 
-<!-- begin prices -->
+<!-- end prices --><!-- begin prices -->
 <section id="prices" class="prices section">
     <div class="container_center">
         <h2 class="section__title"><?php echo SCF::get('prices__title'); ?></h2>
@@ -111,4 +111,3 @@
         </div>
     </div>
 </section>
-<!-- end prices -->

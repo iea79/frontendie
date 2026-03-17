@@ -1,14 +1,15 @@
 <?php
 
 // Регистрация метабоксов и произвольных полей.
-function project_fields( $settings, $type, $id, $meta_type, $types ) {
+function project_fields($settings, $type, $id, $meta_type, $types)
+{
 	// Отображаем поля только на странице редактирования Записи
 	// var_dump($type);
 	// var_dump($id);
-	if ( $type === 'projects' ) {
+	if ($type === 'projects') {
 
 		// Создаем блок настроек (метабокс).
-		$Section = SCF::add_setting( 'project-settings', 'Настройки проекта' );
+		$Section = SCF::add_setting('project-settings', 'Настройки проекта');
 
 		// Добавляем в метабокс произвольные поля.
 		$Section->add_group(
@@ -35,4 +36,4 @@ function project_fields( $settings, $type, $id, $meta_type, $types ) {
 	// Обязательно возвращаем данные.
 	return $settings;
 }
-add_filter( 'smart-cf-register-fields', 'project_fields', 1, 5 );
+add_filter('smart-cf-register-fields', 'project_fields', 1, 5);

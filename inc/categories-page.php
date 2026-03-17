@@ -9,8 +9,8 @@ function setWorks($per_page = -1, $slug = '')
             <?php
             if (is_front_page()) {
             ?><h2 class="section__title">Мои <b>Работы</b></h2><?php
-                                                                }
-                                                                    ?>
+                                                            }
+                                                                ?>
             <div class="works__content">
                 <div class="works__nav">
                     <?php
@@ -23,7 +23,6 @@ function setWorks($per_page = -1, $slug = '')
                     $count_posts = wp_count_posts('projects');
                     $published_posts = $count_posts->publish;
                     // print_r($taxonomies);
-                    // print_r($projects);
                     ?>
                     <ul>
                         <?php
@@ -54,15 +53,30 @@ function setWorks($per_page = -1, $slug = '')
                         if ($query->have_posts()) {
                             while ($query->have_posts()) {
                                 $query->the_post();
+                                // Get terms 'project-staks'
+                                $stacks = get_the_terms(get_the_ID(), 'project-staks');
 
                         ?>
                                 <a href="<?php echo SCF::get('project__link'); ?>" class="works__item cursor_showed" target="_blank" rel="nofollow">
                                     <span><?php // echo $count 
                                             ?></span>
                                     <span class="works__pict">
-                                        <?php echo the_post_thumbnail('large'); ?>
+                                        <?php echo the_post_thumbnail('full'); ?>
                                     </span>
                                     <span class="works__name"><?php the_title(); ?></span>
+                                    <?php
+                                    if ($stacks) {
+                                        $count_stacks = count($stacks);
+                                        echo '<span class="works__stacks"><b>Стек:</b> ';
+                                        foreach ($stacks as $index => $stack) {
+                                            echo $stack->name;
+                                            if ($index < $count_stacks - 1) {
+                                                echo ', ';
+                                            }
+                                        }
+                                        echo '</span>';
+                                    }
+                                    ?>
                                     <span class="works__date"><?php echo get_post_time('F Y', true, null, true) ?></span>
                                 </a>
                         <?php
@@ -76,7 +90,7 @@ function setWorks($per_page = -1, $slug = '')
                     if (is_front_page()) {
                     ?>
                         <div class="works__more">
-                            <a href="/projects" class="btn">Смотреть все</a>
+                            <a href="/projects/" class="btn">Смотреть все</a>
                             <div class="section__info">*На сайте размещены работы разрешенные к показу</div>
                         </div>
                     <?php

@@ -35,3 +35,50 @@ function frondendie_pingback_header() {
 	}
 }
 add_action( 'wp_head', 'frondendie_pingback_header' );
+
+/**
+ * WPGraphQL — подключение экспорта полей SCF в схему GraphQL.
+ */
+if ( function_exists( 'register_graphql_field' ) ) {
+	require get_template_directory() . '/inc/wpgraphql-scf.php';
+}
+
+/**
+ * Webhook для принудительного сброса кэша Next.js (revalidateTag wp-graphql).
+ * Отправляет POST-запрос на /api/revalidate при сохранении записей/страниц/проектов.
+ */
+add_action(
+	'save_post',
+	function( $post_id, $post, $update ) {
+		// Не триггерим на автосохранения, ревизии и не-обновления.
+		if ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) || ! $update ) {
+			return;
+		}
+
+		// URL фронтенда и секрет для валидации. Задаются в wp-config.php или через env.
+		$frontend_url = defined( 'FRONTENDIE_NEXT_URL' ) ? FRONTENDIE_NEXT_URL : '';
+		$secret       = defined( 'FRONTENDIE_REVALIDATE_SECRET' ) ? FRONTENDIE_REVALIDATE_SECRET : '';
+
+		if ( empty( $frontend_url ) || empty( $secret ) ) {
+			return;
+		}
+
+		$endpoint = trailingslashit( $frontend_url ) . 'api/revalidate';
+
+		wp_remote_post(
+			add_query_arg(
+				array(
+					'secret' => rawurlencode( $secret ),
+					'tag'    => 'wp-graphql',
+				),
+				$endpoint
+			),
+			array(
+				'timeout'   => 3,
+				'sslverify' => false,
+			)
+		);
+	},
+	10,
+	3
+);

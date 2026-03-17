@@ -360,7 +360,8 @@ body[data-scrollbar] {
 }
 
 .scroll-content {
-  will-change: transform
+  will-change: transform;
+  min-height: 100vh;
 }
 
 .wrapper {
@@ -1101,7 +1102,8 @@ body[data-scrollbar] {
   align-items: center;
   padding-bottom: 3em;
   background: #001643;
-  text-align: center
+  text-align: center;
+  overflow: hidden;
 }
 
 .home .homeScreen {
@@ -1339,6 +1341,14 @@ body[data-scrollbar] {
   margin-top: 0.7em;
   letter-spacing: 0.05em;
   will-change: transform
+}
+
+.works__stacks {
+  display: block;
+  font-size: 0.8em;
+  opacity: 0.8;
+  margin: 0.7em 0;
+  will-change: transform;
 }
 
 .works__more {
@@ -1680,6 +1690,22 @@ body[data-scrollbar] {
   left: 0;
   top: 0;
   display: none !important
+}
+
+.posts {
+  padding: 8em 0;
+}
+
+
+.posts__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+}
+
+.posts__item {
+  flex: 0 1 33%;
+  min-width: 0;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -147,20 +147,11 @@ add_action('widgets_init', 'frondendie_widgets_init');
  */
 function frondendie_scripts()
 {
-	// wp_enqueue_style( 'locomotive-style', get_template_directory_uri() . '/css/locomotive-scroll.min.css', array(), _S_VERSION );
 	wp_enqueue_style('frondendie-style', get_stylesheet_uri(), array(), _S_VERSION);
 	wp_style_add_data('frondendie-style', 'rtl', 'replace');
 
-	wp_deregister_script('jquery');
-	wp_deregister_script('wp-embed-js');
-	// wp_register_script( 'jquery', get_template_directory_uri() . '/js/jquery.js', array(), _S_VERSION, true );
-	// wp_enqueue_script( 'jquery' );
-
-	// wp_enqueue_script( 'slick-slider', get_template_directory_uri() . '/js/slick.min.js', array('jquery'), _S_VERSION, true );
-	// wp_enqueue_script( 'modal', get_template_directory_uri() . '/js/modal.js', array('jquery'), _S_VERSION, true );
 	wp_enqueue_script('gsap', get_template_directory_uri() . '/js/gsap.min.js', '', _S_VERSION, true);
 	wp_enqueue_script('gsap-st', get_template_directory_uri() . '/js/ScrollTrigger.min.js', '', _S_VERSION, true);
-	// wp_enqueue_script( 'locomotive-sript', get_template_directory_uri() . '/js/locomotive-scroll.min.js', array(), _S_VERSION, true );
 	wp_enqueue_script('smooth-scrollbar', get_template_directory_uri() . '/js/smooth-scrollbar.js', array(), _S_VERSION, true);
 
 	wp_enqueue_script('site-js', get_template_directory_uri() . '/js/function.js', array('gsap', 'gsap-st', 'smooth-scrollbar'), _S_VERSION, true);
@@ -168,7 +159,6 @@ function frondendie_scripts()
 
 	if (is_front_page()) {
 		wp_deregister_style('wp-block-library');
-		// wp_enqueue_script( 'p5', 'https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js', '', '', true );
 		wp_enqueue_script('home', get_template_directory_uri() . '/js/home.js', '', _S_VERSION, true);
 	}
 
@@ -199,14 +189,21 @@ require get_template_directory() . '/inc/template-functions.php';
 require get_template_directory() . '/inc/customizer.php';
 
 /**
- * Home page.
+ * Login page customization (wp-login.php).
  */
-require get_template_directory() . '/scf/home.php';
+require get_template_directory() . '/inc/login-page.php';
 
-/**
- * Project page.
- */
-require get_template_directory() . '/scf/project.php';
+if (class_exists('SCF')) {
+	/**
+	 * Home page.
+	 */
+	require get_template_directory() . '/scf/home.php';
+
+	/**
+	 * Project page.
+	 */
+	require get_template_directory() . '/scf/project.php';
+}
 
 /**
  * Projects archive.
@@ -230,98 +227,7 @@ add_filter('excerpt_more', function ($more) {
 	return '...';
 });
 
-// регистрирующая новые таксономии (create_projects_taxonomies)
-add_action('init', 'create_projects_taxonomies');
-
-// функция, создающая новые таксономии постов типа "projects"
-function create_projects_taxonomies()
-{
-
-	// Добавляем НЕ древовидную таксономию 'project-category' (как метки)
-	register_taxonomy('project-category', 'projects', array(
-		'hierarchical'  => true,
-		'labels'        => array(
-			'name'                        => _x('Категории проектов', 'taxonomy general name'),
-			'singular_name'               => _x('Категория проекта', 'taxonomy singular name'),
-			'search_items'                =>  __('Поиск категорий'),
-			'popular_items'               => __('Популярные категории'),
-			'all_items'                   => __('Все категории проектов'),
-			'parent_item'                 => null,
-			'parent_item_colon'           => null,
-			'edit_item'                   => __('Редактировать категорию'),
-			'update_item'                 => __('Обновить категорию'),
-			'add_new_item'                => __('Добавить категорию'),
-			'new_item_name'               => __('Название новой категории'),
-			'separate_items_with_commas'  => __('Разделитель категорий проектов'),
-			'add_or_remove_items'         => __('Добавить или удалить категорию'),
-			'choose_from_most_used'       => __('Выбрать самые используемые категории'),
-			'menu_name'                   => __('Категории проектов'),
-		),
-		'show_ui'       => true,
-		'show_admin_column'     => true,
-		'query_var'     => true,
-		'meta_box_cb'     => 'post_categories_meta_box',
-		'rewrite'            => array('slug' => 'projects', 'with_front' => false),
-	));
-}
-
-add_action('init', 'register_project_types');
-
-function register_project_types()
-{
-	register_post_type('projects', [
-		'label'  => null,
-		'labels' => [
-			'name'               => 'Проекты', // основное название для типа записи
-			'singular_name'      => 'Проект', // название для одной записи этого типа
-			'add_new'            => 'Добавить проект', // для добавления новой записи
-			'add_new_item'       => 'Добавление проекта', // заголовка у вновь создаваемой записи в админ-панели.
-			'edit_item'          => 'Редактирование проекта', // для редактирования типа записи
-			'new_item'           => 'Новый проект', // текст новой записи
-			'view_item'          => 'Смотреть проект', // для просмотра записи этого типа.
-			'search_items'       => 'Искать проект', // для поиска по этим типам записи
-			'not_found'          => 'Не найдено проектов', // если в результате поиска ничего не было найдено
-			'not_found_in_trash' => 'Не найдено проектов в корзине', // если не было найдено в корзине
-			// 'parent_item_colon'  => '', // для родителей (у древовидных типов)
-			'menu_name'          => 'Проекты', // название меню
-		],
-		// 'description'         => '',
-		'public'              => true,
-		// 'publicly_queryable'  => null, // зависит от public
-		// 'exclude_from_search' => null, // зависит от public
-		// 'show_ui'             => null, // зависит от public
-		// 'show_in_nav_menus'   => null, // зависит от public
-		'show_in_menu'        => true, // показывать ли в меню адмнки
-		// 'show_in_admin_bar'   => null, // зависит от show_in_menu
-		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
-		// 'rest_base'           => true, // $post_type. C WP 4.7
-		// 'menu_position'       => null,
-		'menu_icon'           => 'dashicons-welcome-view-site',
-		//'capability_type'   => 'post',
-		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
-		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
-		// 'hierarchical'        => false,
-		'supports'            => ['title', 'editor', 'thumbnail'], // 'title','editor','author','thumbnail','excerpt','trackbacks','custom-fields','comments','revisions','page-attributes','post-formats'
-		'taxonomies'          => ['project-category'],
-		'has_archive'         => true,
-		'rewrite'             => true,
-		'query_var'           => true,
-	]);
-}
-
-// Register response image and link from project in wp rest
-register_rest_field('projects', 'props', array(
-	'get_callback' => function ($data) {
-		$object = new stdClass();
-		// $image = get_post_meta( $data['id'], 'book_img', true );
-
-		$object->image = get_the_post_thumbnail($data['id'], 'full');
-		$object->link = get_post_meta($data['id'], 'project__link', true);
-
-		return $object;
-	},
-));
-
-add_action('init', function () {
-	SCF::add_options_page('Контакты', 'Контакты', 'manage_options', 'contacts', 'dashicons-location-alt', 31);
-});
+/**
+ * Custom post types and taxonomies.
+ */
+require get_template_directory() . '/inc/post-types-taxonomies.php';
