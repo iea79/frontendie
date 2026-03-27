@@ -45,40 +45,48 @@ if ( function_exists( 'register_graphql_field' ) ) {
 
 /**
  * Webhook для принудительного сброса кэша Next.js (revalidateTag wp-graphql).
- * Отправляет POST-запрос на /api/revalidate при сохранении записей/страниц/проектов.
+ * Вызывается на ключевых изменениях контента/таксономий.
  */
+function frondendie_trigger_next_revalidate() {
+	$frontend_url = defined( 'FRONTENDIE_NEXT_URL' ) ? FRONTENDIE_NEXT_URL : '';
+	$secret       = defined( 'FRONTENDIE_REVALIDATE_SECRET' ) ? FRONTENDIE_REVALIDATE_SECRET : '';
+
+	if ( empty( $frontend_url ) || empty( $secret ) ) {
+		return;
+	}
+
+	$endpoint = trailingslashit( $frontend_url ) . 'api/revalidate';
+
+	wp_remote_post(
+		add_query_arg(
+			array(
+				'secret' => rawurlencode( $secret ),
+				'tag'    => 'wp-graphql',
+			),
+			$endpoint
+		),
+		array(
+			'timeout'   => 3,
+			'sslverify' => false,
+		)
+	);
+}
+
 add_action(
 	'save_post',
-	function( $post_id, $post, $update ) {
-		// Не триггерим на автосохранения, ревизии и не-обновления.
-		if ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) || ! $update ) {
+	function( $post_id ) {
+		if ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) ) {
 			return;
 		}
 
-		// URL фронтенда и секрет для валидации. Задаются в wp-config.php или через env.
-		$frontend_url = defined( 'FRONTENDIE_NEXT_URL' ) ? FRONTENDIE_NEXT_URL : '';
-		$secret       = defined( 'FRONTENDIE_REVALIDATE_SECRET' ) ? FRONTENDIE_REVALIDATE_SECRET : '';
-
-		if ( empty( $frontend_url ) || empty( $secret ) ) {
-			return;
-		}
-
-		$endpoint = trailingslashit( $frontend_url ) . 'api/revalidate';
-
-		wp_remote_post(
-			add_query_arg(
-				array(
-					'secret' => rawurlencode( $secret ),
-					'tag'    => 'wp-graphql',
-				),
-				$endpoint
-			),
-			array(
-				'timeout'   => 3,
-				'sslverify' => false,
-			)
-		);
-	},
-	10,
-	3
+		frondendie_trigger_next_revalidate();
+	}
 );
+
+// Новые/измененные/удаленные термины (категории, таксономии проектов и т.д.).
+add_action( 'created_term', 'frondendie_trigger_next_revalidate' );
+add_action( 'edited_term', 'frondendie_trigger_next_revalidate' );
+add_action( 'delete_term', 'frondendie_trigger_next_revalidate' );
+
+// Удаление записей/страниц.
+add_action( 'deleted_post', 'frondendie_trigger_next_revalidate' );
